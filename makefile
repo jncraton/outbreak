@@ -5,3 +5,6 @@ test:
 
 run: test
 	python3 outbreak.py
+
+clean:
+	rm -rf __pycache__
