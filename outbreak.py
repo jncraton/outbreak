@@ -11,6 +11,12 @@ class Simulation:
 
         >>> sim.count_infected()
         6
+
+        >>> seed(0) 
+        >>> sim = Simulation(n=600, infected=6, distancing_threshold=600)
+        >>> sim.run(quiet=True)
+        >>> sim.count_recovered() + sim.count_deceased()
+        600
         """
 
         self.people = [Person() for _ in range(int(n/3))] +\
@@ -43,12 +49,13 @@ class Simulation:
 
                 person.update()
 
-    def run(self):
+    def run(self, quiet=False):
         day = 1
     
         while self.count_infected() > 0:
             self.run_step()
-            self.print_state(day)
+            if not quiet:
+                self.print_state(day)
             day += 1
 
     def print_state(self, day):
