@@ -71,8 +71,11 @@ class Person:
             self.contract()
 
     def update(self):
-        if self.infected and random() < .10:
-            self.recover()
+        if self.infected:
+            if random() < .10:
+                self.recover()
+            elif random() < .01:
+                self.succomb()
 
 if __name__ == '__main__':
     sim = Simulation(n=6000, infected=10)
