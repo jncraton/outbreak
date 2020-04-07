@@ -1,7 +1,7 @@
-from random import random, choice
+from random import random, seed, choice
 
 class Simulation:
-    def __init__(self, n=12000, infected=10):
+    def __init__(self, n=12000, infected=10, distancing_threshold=100):
         """
         Instantiates a simulation
 
@@ -18,6 +18,9 @@ class Simulation:
         for i in range(infected):
             self.people[i].contract()
 
+        self.daily_contacts = 30
+        self.distancing_threshold = distancing_threshold
+
     def count_infected(self):
         return len([p for p in self.people if p.infected])
 
@@ -28,9 +31,12 @@ class Simulation:
         return len([p for p in self.people if p.recovered])
 
     def run_step(self):
+        if self.count_infected() > self.distancing_threshold:
+            self.daily_contacts = 3
+    
         for person in self.people:
             if person.infected:
-                for _ in range(30):
+                for _ in range(self.daily_contacts):
                     choice(self.people).expose()
 
                 person.update()
@@ -78,5 +84,7 @@ class Person:
                 self.succomb()
 
 if __name__ == '__main__':
+    seed(0)
+
     sim = Simulation(n=6000, infected=10)
     sim.run()
