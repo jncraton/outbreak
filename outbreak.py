@@ -13,7 +13,9 @@ class Simulation:
         6
         """
 
-        self.people = [Person() for _ in range(n)]
+        self.people = [Person() for _ in range(int(n/3))] +\
+                      [Child() for _ in range(int(n/3))] +\
+                      [HighRiskPerson() for _ in range(int(n/3))]
 
         for i in range(infected):
             self.people[i].contract()
@@ -83,6 +85,22 @@ class Person:
             elif random() < .01:
                 self.succomb()
 
+class HighRiskPerson(Person):
+    def update(self):
+        if self.infected:
+            if random() < .10:
+                self.recover()
+            elif random() < .03:
+                self.succomb()        
+
+class Child(Person):
+    def update(self):
+        if self.infected:
+            if random() < .15:
+                self.recover()
+            elif random() < .001:
+                self.succomb()        
+    
 if __name__ == '__main__':
     seed(0)
 
