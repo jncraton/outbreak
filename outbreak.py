@@ -75,7 +75,7 @@ class Person:
         self.infected = True
 
     def expose(self):
-        if not self.recovered and random() < .03:
+        if not self.recovered and not self.deceased and random() < .03:
             self.contract()
 
     def update(self):
