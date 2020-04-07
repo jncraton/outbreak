@@ -36,14 +36,18 @@ class Simulation:
                 person.update()
 
     def run(self):
+        day = 1
+    
         while self.count_infected() > 0:
             self.run_step()
-            self.print_state()
+            self.print_state(day)
+            day += 1
 
-    def print_state(self):
-        print(f"Infected: {self.count_infected():<7}"
-              f"Recovered: {self.count_recovered():<7}"
-              f"Deceased: {self.count_deceased():<7}")
+    def print_state(self, day):
+        print(f"Day {day:<5}"
+              f"    Infected: {self.count_infected():<7}"
+              f"    Recovered: {self.count_recovered():<7}"
+              f"    Deceased: {self.count_deceased():<7}")
     
 class Person:
     def __init__(self):
