@@ -21,6 +21,12 @@ class Simulation:
     def count_infected(self):
         return len([p for p in self.people if p.infected])
 
+    def count_deceased(self):
+        return len([p for p in self.people if p.deceased])
+
+    def count_recovered(self):
+        return len([p for p in self.people if p.recovered])
+
     def run_step(self):
         for person in self.people:
             if person.infected:
@@ -35,7 +41,9 @@ class Simulation:
             self.print_state()
 
     def print_state(self):
-        print(f"{self.count_infected()}")
+        print(f"Infected: {self.count_infected():<7}"
+              f"Recovered: {self.count_recovered():<7}"
+              f"Deceased: {self.count_deceased():<7}")
     
 class Person:
     def __init__(self):
@@ -63,5 +71,5 @@ class Person:
             self.recover()
 
 if __name__ == '__main__':
-    sim = Simulation(n=12000, infected=10)
+    sim = Simulation(n=6000, infected=10)
     sim.run()
